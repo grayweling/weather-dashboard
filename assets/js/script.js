@@ -1,6 +1,6 @@
 var searchForm = document.getElementById("search-form");
 var cityName = document.getElementById("city");
-var currentWeather = document.getElementById("weather-list-container");
+var currentWeather = document.getElementById("weather-container");
 
 var currentDate = moment().format("L");
 var displayCurrentDate = document.getElementById("current-date");
@@ -58,7 +58,10 @@ var getWeather = function (lat, lon) {
     fetch(weatherApiUrl)
       .then(function (response) {
         if (response.ok) {
-          response.json();
+          response.json()
+            .then(function (data) {
+              displayWeather(data);
+            })
           console.log(response);
         } else {
           alert("Error: City Not Found");
@@ -68,6 +71,39 @@ var getWeather = function (lat, lon) {
         alert("Unable to Connect to OpenWeather");
       });
 };
+
+displayWeather = function (weather) {
+
+  var weatherList = document.createElement("ul");
+  weatherList.classList = "weather-list-container list-unstyled";
+  weatherList.id = "current-weather";
+
+  var temp = document.createElement("li");
+  temp.classList = "weather-list-item";
+  temp.textContent = "Temperature: " + weather.current.temp + "°F";
+  temp.id = "current-temp";
+  weatherList.appendChild(temp);
+
+  var humidity = document.createElement("li");
+  humidity.classList = "weather-list-item";
+  humidity.textContent = "Humidity: " + weather.current.humidity + "%";
+  humidity.id = "current-humidity";
+  weatherList.appendChild(humidity);
+
+  var wind = document.createElement("li");
+  wind.classList = "weather-list-item";
+  wind.textContent = "Wind: " + weather.current.wind_speed + " MPH";
+  wind.id = "current-wind";
+  weatherList.appendChild(wind);
+
+  var uv = document.createElement("li");
+  uv.classList = "weather-list-item";
+  uv.textContent = "UV Index: " + weather.current.uvi;
+  uv.id = "current-uv";
+  weatherList.appendChild(uv);
+
+  currentWeather.appendChild(weatherList);
+}
 
 var formSubmitHandler = function (event) {
     event.preventDefault();

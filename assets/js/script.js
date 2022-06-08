@@ -53,7 +53,7 @@ var getWeather = function (lat, lon) {
     console.log(lon);
 
     var weatherApiUrl =
-        "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&appid=5a47ba130d7027bb73a40455a48ce67b";
+        "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&units=imperial&appid=5a47ba130d7027bb73a40455a48ce67b";
 
     fetch(weatherApiUrl)
       .then(function (response) {

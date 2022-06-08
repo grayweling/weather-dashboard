@@ -107,8 +107,12 @@ displayWeather = function (weather) {
 
 var formSubmitHandler = function (event) {
     event.preventDefault();
-    var city = cityName.value.trim();
+    var city = cityName.value.trim().toUpperCase();
     console.log(city);
+
+    var displaycity = document.getElementById("current-city");
+    displaycity.textContent = city;
+    displayCurrentDate.textContent = moment().format("L");
 
     if (city) {
         cityCoords(city);
